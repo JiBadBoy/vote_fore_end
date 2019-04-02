@@ -24,7 +24,6 @@
 <script>
 import {isMobile} from '@/utils/validate'
 import {sendMsg} from '@/api/login'
-
 export default {
   data () {
     var checkCode = (rule, value, callback) => {
@@ -73,7 +72,9 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.mobileForm.code === this.validateCode) {
-            this.$router.push({ path: '/vote/list/' + this.mobileForm.mobile })
+            this.$store.dispatch('Login', {uid: this.mobileForm.mobile, type: 'mobile'}).then(() => {
+              this.$router.push({ path: '/vote/list/' + this.mobileForm.mobile })
+            })
           } else {
             this.$message({
               message: '验证码错误',

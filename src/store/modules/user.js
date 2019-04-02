@@ -1,12 +1,12 @@
 const user = {
   state: {
-    uid: '',
+    uid: '0',
     loginType: ''
   },
 
   mutations: {
     SET_UID: (state, id) => {
-      state.userId = id
+      state.uid = id
     },
     SET_TYPE: (state, loginType) => {
       state.loginType = loginType
@@ -18,8 +18,11 @@ const user = {
     Login ({ commit }, userInfo) {
       const uid = userInfo.uid.trim()
       const type = userInfo.type.trim()
-      commit('SET_UID', uid)
-      commit('SET_TYPE', type)
+      return new Promise((resolve, reject) => {
+        commit('SET_UID', uid)
+        commit('SET_TYPE', type)
+        resolve()
+      })
     }
   }
 }
