@@ -3,7 +3,7 @@
         <el-col :xs="24" :xl="16" :sm="16">
             <h3 class="product_tit">请选择下列方式进行投票</h3>
            <el-row :gutter="20" type="flex" justify="center">
-                <el-col :gutter="20" :xs="24" :xl="12" :sm="12">
+                <el-col :gutter="20" :xs="24" :xl="20" :sm="20">
                     <el-col :xs="24" :xl="12" :sm="12">
                         <div class="grid-content bg-purple">
                             <router-link to="/login/card">
