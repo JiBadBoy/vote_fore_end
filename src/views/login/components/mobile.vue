@@ -3,14 +3,22 @@
   <el-col :xs="24" :xl="8" :sm="8" v-if="this.$route.params.type == 'mobile'">
     <el-form :model="mobileForm" status-icon :rules="mobileFromRules" ref="mobileForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label="手机号" prop="mobile">
+           <el-col :span="17">
             <el-input  v-model="mobileForm.mobile"></el-input>
+           </el-col>
         </el-form-item>
         <el-form-item label="验证码" prop="code">
-            <el-input v-model.number="mobileForm.code"></el-input>
-            <el-button type="button" @click="sendCode('mobileForm')" :disabled="disabled" v-if="disabled===false">获取验证码
+          <el-col :span="11">
+             <el-input v-model.number="mobileForm.code"></el-input>
+          </el-col>
+          <el-col :span="2">
+          </el-col>
+           <el-col :span="11">
+              <el-button type="button" @click="sendCode('mobileForm')" :disabled="disabled" v-if="disabled===false">获取验证码
             </el-button>
             <el-button type="button" @click="sendCode('mobileForm')" :disabled="disabled" v-if="disabled===true">{{btnTxt}}
             </el-button>
+          </el-col>
         </el-form-item>
         <el-form-item>
             <el-button type="primary" @click="submitForm('mobileForm')">提交</el-button>
