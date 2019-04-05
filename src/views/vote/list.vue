@@ -39,11 +39,13 @@
 
 <script>
 import {fetchList} from '@/api/vote'
+import {getUser} from '@/utils/auth'
+
 export default {
   name: 'VoteList',
   data () {
     return {
-      activeName: ['0'],
+      activeName: ['1'],
       list: null,
       dialogFormVisible: false,
       form: {
@@ -56,7 +58,7 @@ export default {
         resource: '',
         desc: ''
       },
-      formLabelWidth: '120px'
+      formLabelWidth: '80px'
     }
   },
   created () {
@@ -64,7 +66,8 @@ export default {
   },
   methods: {
     getList () {
-      fetchList(this.$store.getters.uid).then(response => {
+      const userInfo = getUser()
+      fetchList(userInfo.uid).then(response => {
         this.list = response.list
       })
     }

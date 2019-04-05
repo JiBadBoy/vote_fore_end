@@ -1,3 +1,5 @@
+import { setUser } from '@/utils/auth'
+
 const user = {
   state: {
     uid: '0',
@@ -19,6 +21,7 @@ const user = {
       const uid = userInfo.uid.trim()
       const type = userInfo.type.trim()
       return new Promise((resolve, reject) => {
+        setUser({uid: uid, loginType: type})
         commit('SET_UID', uid)
         commit('SET_TYPE', type)
         resolve()

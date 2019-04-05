@@ -15,6 +15,7 @@ import store from './store'
 import router from './router'
 
 import '@/icons' // icon
+import '@/permission'
 Vue.use(ElementUI, { locale })
 Vue.config.productionTip = false
 

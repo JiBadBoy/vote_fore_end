@@ -1,15 +1,15 @@
 import Cookies from 'js-cookie'
 
-const TokenKey = 'study_token'
+const userKey = 'vote_user_key'
 
-export function getToken () {
-  return Cookies.get(TokenKey)
+export function getUser () {
+  return Cookies.get(userKey)
 }
 
-export function setToken (token) {
-  return Cookies.set(TokenKey, token)
+export function setUser (userInfo) {
+  return Cookies.set(userKey, userInfo)
 }
 
-export function removeToken () {
-  return Cookies.remove(TokenKey)
+export function removeUser () {
+  return Cookies.remove(userKey)
 }
