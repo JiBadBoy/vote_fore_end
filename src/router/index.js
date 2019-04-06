@@ -28,17 +28,17 @@ export const constantRouterMap = [
     path: '/vote',
     component: Layout,
     name: 'Vote',
-    redirect: '/vote/list/0',
+    redirect: '/vote/list',
     children: [
       {
-        path: 'list/:id(\\d+)',
+        path: 'list',
         name: 'VoteList',
         component: () => import('@/views/vote/list')
       },
       {
-        path: 'detail/:id(\\d+)',
-        name: 'VoteDetail',
-        component: () => import('@/views/vote/detail')
+        path: 'list_done',
+        name: 'VoteListDone',
+        component: () => import('@/views/vote/list_done')
       }
     ]
   }

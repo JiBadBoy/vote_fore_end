@@ -3,7 +3,7 @@ import Cookies from 'js-cookie'
 const userKey = 'vote_user_key'
 
 export function getUser () {
-  return Cookies.get(userKey)
+  return Cookies.getJSON(userKey)
 }
 
 export function setUser (userInfo) {

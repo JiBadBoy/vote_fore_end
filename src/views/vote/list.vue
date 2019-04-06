@@ -7,9 +7,9 @@
                 </el-col>
                 <el-col :xs="9" :xl="3" :sm="3">
                     <el-button type="info" plain class="vote_list_btn">
-                        <a href="">
+                        <router-link  to="/vote/list_done">
                             查看已投选项
-                        </a>
+                        </router-link>
                     </el-button>
                 </el-col>
            </el-row>
@@ -24,64 +24,120 @@
                     <el-tag type="success">维修范围：{{item.Tuse_fentanHouse}}</el-tag>
                     <el-tag type="success">分摊金额：{{item.TuseHouse_sumAmount}}</el-tag>
                     <el-tag type="success">现金分摊：{{item.TuseHouse_XJfentan}}</el-tag>
-                    <el-button type="danger" plain @click="dialogFormVisible = true" class="vote_list_btn">点击投票</el-button>
+                    <el-button type="danger" plain @click="openDialog(item)" class="vote_list_btn">点击投票</el-button>
                 </el-collapse-item>
             </el-collapse>
         </el-col>
         <el-dialog title="请选择投票" :visible.sync="dialogFormVisible" custom-class="vote_list_dialog" center>
-            <el-form :model="form">
-                <el-form-item label="是否同意该条款" prop="resource">
-                    <el-radio-group v-model="form.resource">
-                    <el-radio label="同意"></el-radio>
-                    <el-radio label="不同意"></el-radio>
+            <el-form :model="voteForm" :rules="voteFormRules" ref="voteForm">
+                <el-form-item label="选项" prop="agree">
+                    <el-radio-group v-model="voteForm.agree">
+                    <el-radio label="1">同意</el-radio>
+                    <el-radio label="0">不同意</el-radio>
                     </el-radio-group>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                <el-button type="primary" @click="submitForm('voteForm')">确 定</el-button>
             </div>
         </el-dialog>
     </el-row>
 </template>
 
 <script>
-import {fetchList} from '@/api/vote'
+import {fetchList, doVote} from '@/api/vote'
 import {getUser} from '@/utils/auth'
 
 export default {
   name: 'VoteList',
+  inject: ['reload'],
   data () {
     return {
-      activeName: ['1'],
+      activeName: [0],
       list: null,
+      id: '',
+      loginType: '',
+      item: null,
       dialogFormVisible: false,
-      form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
+      voteForm: {
+        agree: ''
       },
-      formLabelWidth: '80px'
+      voteFormRules: {
+        agree: [
+          { required: true, message: '请选择是否同意', trigger: 'change' }
+        ]
+      }
     }
   },
   created () {
     this.getList()
   },
-  rules: {
-      resource: [
-            { required: true, message: '是否同意该条款', trigger: 'change' }
-          ]
-  },
   methods: {
     getList () {
       const userInfo = getUser()
+      this.id = userInfo.uid
+      this.loginType = userInfo.loginType
       fetchList(userInfo.uid).then(response => {
         this.list = response.list
+      })
+    },
+    openDialog (item) {
+      this.voteForm.agree = ''
+      this.dialogFormVisible = true
+      this.item = item
+    },
+    submitForm (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.dialogFormVisible = false
+          let way = 1
+          switch (this.loginType) {
+            case 'card':
+              way = 1
+              break
+            case 'mobile':
+              way = 2
+              break
+            case 'wx':
+              way = 3
+              break
+            case 'msg':
+              way = 4
+              break
+          }
+          const data = {
+            TuseHouse_id: this.item.TuseHouse_id,
+            TuseVote_value: this.agree,
+            TuseVote_way: way,
+            TuseVote_wayCode: this.id,
+            TuseVote_man: this.item.Taccount_name
+          }
+          doVote(data).then(response => {
+            const data = response
+            if (data.code === 200) {
+              this.$message({
+                message: '投票成功',
+                type: 'success',
+                center: true
+              })
+              this.reload()
+            } else {
+              this.$message({
+                message: '投票失败，请重试',
+                type: 'error',
+                center: true
+              })
+            }
+          })
+        } else {
+          this.$message({
+            message: '请选择是否同意！',
+            type: 'error',
+            center: true
+          })
+          return false
+        }
       })
     }
   }
