@@ -28,12 +28,12 @@
                 </el-collapse-item>
             </el-collapse>
         </el-col>
-        <el-dialog title="请选择投票" :visible.sync="dialogFormVisible" custom-class="vote_list_dialog" center>
-            <el-form :model="voteForm" :rules="voteFormRules" ref="voteForm">
+        <el-dialog v-bind:title="dialogTitle" :visible.sync="dialogFormVisible" custom-class="vote_list_dialog" center>
+            <el-form :model="voteForm" :rules="voteFormRules" ref="voteForm" class="vote_list_dialogcon">
                 <el-form-item label="选项" prop="agree">
                     <el-radio-group v-model="voteForm.agree">
-                    <el-radio label="1">同意</el-radio>
-                    <el-radio label="0">不同意</el-radio>
+                    <el-radio label="1" border>同意</el-radio>
+                    <el-radio label="0" border>不同意</el-radio>
                     </el-radio-group>
                 </el-form-item>
             </el-form>
@@ -60,6 +60,7 @@ export default {
       loginType: '',
       item: null,
       dialogFormVisible: false,
+      dialogTitle: '',
       voteForm: {
         agree: ''
       },
@@ -86,6 +87,7 @@ export default {
       this.voteForm.agree = ''
       this.dialogFormVisible = true
       this.item = item
+      this.dialogTitle = item.Tuse_content
     },
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
@@ -133,6 +135,10 @@ export default {
     .vote_list_btn{
         float: right;
         margin-top: 5px;
+    }
+    .vote_list_dialogcon{
+      display: flex;
+      justify-content: center;
     }
     .el-collapse-item__header{
         font-size: 16px;
