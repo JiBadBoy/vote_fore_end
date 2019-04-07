@@ -78,7 +78,7 @@ export default {
       const userInfo = getUser()
       this.id = userInfo.uid
       this.loginType = userInfo.loginType
-      fetchList(userInfo.uid).then(response => {
+      fetchList(userInfo.uid, userInfo.loginType).then(response => {
         this.list = response.list
       })
     },
@@ -91,25 +91,10 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.dialogFormVisible = false
-          let way = 1
-          switch (this.loginType) {
-            case 'card':
-              way = 1
-              break
-            case 'mobile':
-              way = 2
-              break
-            case 'wx':
-              way = 3
-              break
-            case 'msg':
-              way = 4
-              break
-          }
           const data = {
             TuseHouse_id: this.item.TuseHouse_id,
-            TuseVote_value: this.agree,
-            TuseVote_way: way,
+            TuseVote_value: this.voteForm.agree,
+            TuseVote_way: this.loginType,
             TuseVote_wayCode: this.id,
             TuseVote_man: this.item.Taccount_name
           }

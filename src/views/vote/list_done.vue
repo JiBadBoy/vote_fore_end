@@ -64,7 +64,7 @@ export default {
     getList () {
       const userInfo = getUser()
       this.id = userInfo.uid
-      fetchDoneList(userInfo.uid).then(response => {
+      fetchDoneList(userInfo.uid, userInfo.loginType).then(response => {
         this.list = response.list
       })
     }

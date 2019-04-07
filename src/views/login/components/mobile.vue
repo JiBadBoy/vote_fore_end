@@ -80,7 +80,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.mobileForm.code === this.validateCode) {
-            this.$store.dispatch('Login', {uid: this.mobileForm.mobile, type: 'mobile'}).then(() => {
+            this.$store.dispatch('Login', {uid: this.mobileForm.mobile, type: '2'}).then(() => {
               this.$router.push({ path: '/vote/list' })
             })
           } else {
