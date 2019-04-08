@@ -67,5 +67,10 @@ export default {
     .vote_list_dialog {
         width: 75% !important;
     }
+    .el-dialog__header{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 }
 </style>

@@ -6,11 +6,11 @@
                     <h3 class="product_tit">已投票列表</h3>
                 </el-col>
                 <el-col :xs="9" :xl="3" :sm="3">
-                    <el-button type="primary" plain class="vote_list_btn">
-                        <router-link  to="/vote/list">
+                    <router-link  to="/vote/list">
+                        <el-button type="primary" plain class="vote_list_btn">
                             开始投票
-                        </router-link>
-                    </el-button>
+                        </el-button>
+                    </router-link>
                 </el-col>
            </el-row>
              <el-collapse v-model="activeName" accordion>
@@ -96,6 +96,7 @@ export default {
         padding-top: 8px;
         padding-bottom: 8px;
         color: #f56c6c;
+        text-align: center;
     }
     .el-collapse-item__header{
         font-size: 16px;

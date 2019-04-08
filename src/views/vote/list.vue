@@ -6,11 +6,11 @@
                     <h3 class="product_tit">投票列表</h3>
                 </el-col>
                 <el-col :xs="9" :xl="3" :sm="3">
-                    <el-button type="info" plain class="vote_list_btn">
-                        <router-link  to="/vote/list_done">
+                    <router-link  to="/vote/list_done">
+                        <el-button type="info" plain class="vote_list_btn">
                             查看已投选项
-                        </router-link>
-                    </el-button>
+                        </el-button>
+                    </router-link>
                 </el-col>
            </el-row>
              <el-collapse v-model="activeName" accordion>
