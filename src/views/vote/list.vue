@@ -20,11 +20,17 @@
                         v-bind:name="index"
                         v-bind:key="index"
                         >
-                    <el-tag type="success">维修金额：{{item.Tuse_hezhunAmount}}</el-tag>
-                    <el-tag type="success">维修范围：{{item.Tuse_fentanHouse}}</el-tag>
-                    <el-tag type="success">分摊金额：{{item.TuseHouse_sumAmount}}</el-tag>
-                    <el-tag type="success">现金分摊：{{item.TuseHouse_XJfentan}}</el-tag>
-                    <el-button type="danger" plain @click="openDialog(item)" class="vote_list_btn">点击投票</el-button>
+                      <el-col>
+                        <el-tag type="success">维修范围：{{item.Tuse_fentanHouse}}</el-tag>
+                      </el-col>
+                    <el-col>
+                      <el-tag type="success">维修金额：{{item.Tuse_hezhunAmount}}</el-tag>
+                      <el-tag type="success">分摊金额：{{item.TuseHouse_sumAmount}}</el-tag>
+                      <el-tag type="success">现金分摊：{{item.TuseHouse_XJfentan}}</el-tag>
+                    </el-col>
+                   <el-col>
+                      <el-button type="danger" plain @click="openDialog(item)" class="vote_list_btn">点击投票</el-button>
+                   </el-col>
                 </el-collapse-item>
             </el-collapse>
         </el-col>
@@ -150,6 +156,7 @@ export default {
     .vote_list_btn{
         float: right;
         margin-top: 5px;
+        margin-bottom: 10px;
     }
     .vote_list_dialogcon{
       display: flex;
@@ -160,10 +167,5 @@ export default {
     }
     .el-collapse-item__content span{
         margin-bottom: 8px;
-    }
-    @media only screen and (max-width: 767px){
-        .vote_list_dialog {
-            width: 75% !important;
-        }
     }
 </style>

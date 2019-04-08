@@ -20,10 +20,14 @@
                         v-bind:name="index"
                         v-bind:key="index"
                         >
-                    <el-tag type="success">维修金额：{{item.Tuse_hezhunAmount}}</el-tag>
-                    <el-tag type="success">维修范围：{{item.Tuse_fentanHouse}}</el-tag>
-                    <el-tag type="success">分摊金额：{{item.TuseHouse_sumAmount}}</el-tag>
-                    <el-tag type="success">现金分摊：{{item.TuseHouse_XJfentan}}</el-tag>
+                        <el-col>
+                             <el-tag type="success">维修范围：{{item.Tuse_fentanHouse}}</el-tag>
+                        </el-col>
+                        <el-col>
+                            <el-tag type="success">维修金额：{{item.Tuse_hezhunAmount}}</el-tag>
+                            <el-tag type="success">分摊金额：{{item.TuseHouse_sumAmount}}</el-tag>
+                            <el-tag type="success">现金分摊：{{item.TuseHouse_XJfentan}}</el-tag>
+                        </el-col>
                    <el-row :gutter="20">
                         <el-col :xs="9" :xl="3" :sm="3" class="vote_result_tip">
                             你的投票结果为：
@@ -98,10 +102,5 @@ export default {
     }
     .el-collapse-item__content span{
         margin-bottom: 8px;
-    }
-    @media only screen and (max-width: 767px){
-        .vote_list_dialog {
-            width: 75% !important;
-        }
     }
 </style>
