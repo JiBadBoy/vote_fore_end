@@ -64,5 +64,8 @@ export default {
     .logo h1 i{
         font-size: 14px;
     }
+    .vote_list_dialog {
+        width: 75% !important;
+    }
 }
 </style>
