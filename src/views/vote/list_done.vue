@@ -26,7 +26,7 @@
                     <el-tag type="success">现金分摊：{{item.TuseHouse_XJfentan}}</el-tag>
                    <el-row :gutter="20">
                         <el-col :xs="9" :xl="3" :sm="3" class="vote_result_tip">
-                            你的投票结果为：
+                            投票意见为：
                         </el-col>
                         <el-col :xs="15" :xl="4" :sm="3">
                             <el-alert
@@ -35,7 +35,7 @@
                                 center
                                 show-icon
                                 :closable="false"
-                                v-if="item.TuseVote_value === '1'"
+                                v-if="item.TuseVote_value === 1"
                             >
                             </el-alert>
                             <el-alert
@@ -44,7 +44,7 @@
                                 center
                                 show-icon
                                 :closable="false"
-                                v-if="item.TuseVote_value === '0'"
+                                v-if="item.TuseVote_value === 0"
                             >
                             </el-alert>
                         </el-col>
