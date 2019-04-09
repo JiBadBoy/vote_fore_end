@@ -18,7 +18,6 @@ import '@/icons' // icon
 import '@/permission'
 Vue.use(ElementUI, { locale })
 Vue.config.productionTip = false
-Vue.prototype.mwindow = window
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
