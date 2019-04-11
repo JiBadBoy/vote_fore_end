@@ -2,37 +2,37 @@
     <el-row :gutter="12"  type="flex" justify="center">
         <el-col :xs="24" :sm="24" :md="8">
             <el-card shadow="always">
-                <!--<el-alert-->
-                <!--title="该功能暂未开放"-->
-                <!--type="error"-->
-                <!--:closable="false"-->
-                <!--center-->
-                <!--show-icon>-->
-                <!--</el-alert>-->
-                <el-button  type="primary" @click="mWindow.JSCallBackId.prepare()">准备</el-button>
-                <el-button type="primary" @click="mWindow.JSCallBackId.startReadCard()">开始读卡</el-button>
-                <el-button type="primary" @click="mWindow.JSCallBackId.stopReadCard()">停止读卡</el-button>
-                <el-button type="primary" @click="mWindow.JSCallBackId.close()">关闭资源</el-button>
+                <el-row :gutter="12"  type="flex" justify="space-around">
+                    <el-button  :span="12" :offset="6" type="primary" @click="mWindow.JSCallBackId.startReadCard()">开始读卡</el-button>
+                    <!--<el-button  :span="12" :offset="6" type="primary" @click="startReadCard()">开始读卡</el-button>-->
+                    <el-button  :span="12" :offset="6" type="primary" @click="onReadSuccess()">确认成功</el-button>
+                </el-row>
             </el-card>
             <el-card shadow="always">
-                <el-input
-                        type="textarea"
-                        :rows="8"
-                        placeholder="内容"
-                        v-model="content">
-                </el-input>
+                <el-form :model="pdaForm" status-icon  ref="pdaForm" >
+                <el-form-item label="姓名:">
+                    <el-input v-model="pdaForm.userName" readonly></el-input>
+                </el-form-item>
+                <el-form-item label="身份证号:">
+                    <el-input v-model="pdaForm.cardId" readonly></el-input>
+                </el-form-item>
+                </el-form>
             </el-card>
         </el-col>
     </el-row>
 </template>
 
 <script>
+import {isCardID} from '@/utils/validate'
 export default {
   name: 'Pda',
   data () {
     return {
-      content: '',
-      mWindow: null
+      mWindow: null,
+      pdaForm: {
+        userName: '',
+        cardId: ''
+      }
     }
   },
   mounted () {
@@ -42,6 +42,9 @@ export default {
     this.mWindow = window
   },
   methods: {
+    startReadCard () {
+      this.onRead(JSON.stringify({name: 'jifeihu', cardId: '411381199203153511', code: 200}))
+    },
     onStart (response) {
       if (response !== 'success') {
         this.$message({
@@ -61,7 +64,38 @@ export default {
       }
     },
     onRead (response) {
-      this.content = response
+      response = JSON.parse(response)
+      if (response.code === 200) {
+        if (isCardID(response.cardId)) {
+          this.pdaForm.userName = response.name
+          this.pdaForm.cardId = response.cardId
+        } else {
+          this.$message({
+            message: '身份证卡号错误！',
+            type: 'error',
+            center: true
+          })
+        }
+      } else {
+        this.$message({
+          message: '读取失败，请重试！',
+          type: 'error',
+          center: true
+        })
+      }
+    },
+    onReadSuccess () {
+      if (this.pdaForm.cardId !== '') {
+        this.$store.dispatch('Login', {uid: this.pdaForm.cardId, type: '1'}).then(() => {
+          this.$router.push({ path: '/vote/list' })
+        })
+      } else {
+        this.$message({
+          message: '请先读卡',
+          type: 'error',
+          center: true
+        })
+      }
     }
   }
 }

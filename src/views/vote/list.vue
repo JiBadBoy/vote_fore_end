@@ -13,26 +13,30 @@
                     </router-link>
                 </el-col>
            </el-row>
-             <el-collapse v-model="activeName" accordion>
-                <el-collapse-item
-                        v-for="(item, index) in list"
-                        v-bind:title="item.Tuse_content"
-                        v-bind:name="index"
-                        v-bind:key="index"
+            <el-row>
+                    <el-collapse v-model="activeName" accordion>
+                        <el-collapse-item
+                                v-for="(item, index) in list"
+                                v-bind:title="item.Tuse_content"
+                                v-bind:name="index"
+                                v-bind:key="index"
                         >
-                      <el-col>
-                        <el-tag type="success">维修范围：{{item.Tuse_fentanHouse}}</el-tag>
-                      </el-col>
-                    <el-col>
-                      <el-tag type="success">维修金额：{{item.Tuse_hezhunAmount}}</el-tag>
-                      <el-tag type="success">分摊金额：{{item.TuseHouse_sumAmount}}</el-tag>
-                      <el-tag type="success">现金分摊：{{item.TuseHouse_XJfentan}}</el-tag>
-                    </el-col>
-                   <el-col>
-                      <el-button type="danger" plain @click="openDialog(item)" class="vote_list_btn">点击投票</el-button>
-                   </el-col>
-                </el-collapse-item>
-            </el-collapse>
+                            <el-card shadow="always">
+                            <el-col>
+                                <el-tag type="success">维修范围：{{item.Tuse_fentanHouse}}</el-tag>
+                            </el-col>
+                            <el-col>
+                                <el-tag type="success">维修金额：{{item.Tuse_hezhunAmount}}</el-tag>
+                                <el-tag type="success">分摊金额：{{item.TuseHouse_sumAmount}}</el-tag>
+                                <el-tag type="success">现金分摊：{{item.TuseHouse_XJfentan}}</el-tag>
+                            </el-col>
+                            <el-col>
+                                <el-button type="danger" plain @click="openDialog(item)" class="vote_list_btn">点击投票</el-button>
+                            </el-col>
+                            </el-card>
+                        </el-collapse-item>
+                    </el-collapse>
+            </el-row>
         </el-col>
         <el-dialog v-bind:title="dialogTitle" :visible.sync="dialogFormVisible" custom-class="vote_list_dialog" center>
             <el-form :model="voteForm" :rules="voteFormRules" ref="voteForm" class="vote_list_dialogcon">
