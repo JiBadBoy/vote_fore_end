@@ -32,7 +32,7 @@
                                <el-col>
                                  <el-row type="flex" :xs="24" class="vote_item_tit">
                                     <el-col >[维修项目]: {{item.Tuse_content}}</el-col>
-                                    <el-col class="vote_item_time">[结束时间]: 2019.12.30</el-col>
+                                    <el-col class="vote_item_time">[结束时间]: {{item.Tuse_voteEnd}}</el-col>
                                   </el-row>
                                </el-col>
                             </template>
@@ -50,7 +50,7 @@
                                 <el-tag type="success">资金分摊：{{item.TuseHouse_ZJfentan}}</el-tag>
                             </el-col>
                             <el-col>
-                                <el-button type="danger" plain @click="openDialog(item)" class="vote_list_btn">点击投票</el-button>
+                                <el-button type="danger" plain @click="openDialog(item)" :disabled="item.end" class="vote_list_btn">点击投票</el-button>
                             </el-col>
                             </el-card>
                         </el-collapse-item>
