@@ -1,6 +1,14 @@
 <template>
     <el-row :gutter="20" type="flex" justify="center">
         <el-col :xs="24" :xl="16" :sm="16">
+            <el-row>
+                <el-alert
+                        title="如果房屋座落与您实际房屋信息不一致，请与物业公司或维修资金监管机构联系！"
+                        type="warning"
+                        center
+                        show-icon>
+                </el-alert>
+            </el-row>
            <el-row>
                 <el-col :xs="15" :xl="21" :sm="21">
                     <h3 class="product_tit">投票列表</h3>
@@ -17,18 +25,24 @@
                     <el-collapse v-model="activeName" accordion>
                         <el-collapse-item
                                 v-for="(item, index) in list"
-                                v-bind:title="item.Tuse_content"
                                 v-bind:name="index"
                                 v-bind:key="index"
                         >
+                            <template slot="title" type="flex" justify="space-around">
+                                <el-col >[维修项目]: {{item.Tuse_content}}</el-col>
+                            </template>
                             <el-card shadow="always">
                             <el-col>
-                                <el-tag type="success">维修范围：{{item.Tuse_fentanHouse}}</el-tag>
+                                <el-tag >房屋坐落：{{item.address}}</el-tag>
+                            </el-col>
+                            <el-col>
+                                <el-tag type="success">分摊范围：{{item.Tuse_fentanHouse}}</el-tag>
                             </el-col>
                             <el-col>
                                 <el-tag type="success">维修金额：{{item.Tuse_hezhunAmount}}</el-tag>
                                 <el-tag type="success">分摊金额：{{item.TuseHouse_sumAmount}}</el-tag>
                                 <el-tag type="success">现金分摊：{{item.TuseHouse_XJfentan}}</el-tag>
+                                <el-tag type="success">资金分摊：{{item.TuseHouse_ZJfentan}}</el-tag>
                             </el-col>
                             <el-col>
                                 <el-button type="danger" plain @click="openDialog(item)" class="vote_list_btn">点击投票</el-button>
@@ -39,6 +53,12 @@
             </el-row>
         </el-col>
         <el-dialog v-bind:title="dialogTitle" :visible.sync="dialogFormVisible" custom-class="vote_list_dialog" center>
+            <el-alert
+                    :title="address"
+                    center
+                    type="success"
+                    :closable="false">
+            </el-alert>
             <el-form :model="voteForm" :rules="voteFormRules" ref="voteForm" class="vote_list_dialogcon">
                 <el-form-item label="选项" prop="agree">
                     <el-radio-group v-model="voteForm.agree">
@@ -71,6 +91,7 @@ export default {
       item: null,
       dialogFormVisible: false,
       dialogTitle: '',
+      address: '',
       voteForm: {
         agree: ''
       },
@@ -98,6 +119,7 @@ export default {
       this.dialogFormVisible = true
       this.item = item
       this.dialogTitle = item.Tuse_content
+      this.address = item.address
     },
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {

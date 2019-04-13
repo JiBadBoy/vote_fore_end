@@ -4,8 +4,8 @@
             <div class="logo">
                 <h1>
                     <router-link class="w3lsbrand" to="/">
-                        <span>投</span>
-                        <i>住房专项维修资金使用业主投票系统</i>
+                        <span>维</span>
+                        <i>住宅专项维修资金使用业主表决系统</i>
                     </router-link>
                 </h1>
             </div>

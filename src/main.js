@@ -16,6 +16,7 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission'
+import 'babel-polyfill'
 Vue.use(ElementUI, { locale })
 Vue.config.productionTip = false
 /* eslint-disable no-new */

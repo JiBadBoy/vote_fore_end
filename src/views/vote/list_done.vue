@@ -18,19 +18,26 @@
 
                     <el-collapse-item
                             v-for="(item, index) in list"
-                            v-bind:title="item.Tuse_content"
                             v-bind:name="index"
                             v-bind:key="index"
                     >
+
+                        <template slot="title" type="flex" justify="space-around">
+                            <el-col >[维修项目]: {{item.Tuse_content}}</el-col>
+                        </template>
                         <el-card shadow="always">
-                        <el-col>
-                            <el-tag type="success">维修范围：{{item.Tuse_fentanHouse}}</el-tag>
-                        </el-col>
-                        <el-col>
-                            <el-tag type="success">维修金额：{{item.Tuse_hezhunAmount}}</el-tag>
-                            <el-tag type="success">分摊金额：{{item.TuseHouse_sumAmount}}</el-tag>
-                            <el-tag type="success">现金分摊：{{item.TuseHouse_XJfentan}}</el-tag>
-                        </el-col>
+                            <el-col>
+                                <el-tag >房屋坐落：{{item.address}}</el-tag>
+                            </el-col>
+                            <el-col>
+                                <el-tag type="success">分摊范围：{{item.Tuse_fentanHouse}}</el-tag>
+                            </el-col>
+                            <el-col>
+                                <el-tag type="success">维修金额：{{item.Tuse_hezhunAmount}}</el-tag>
+                                <el-tag type="success">分摊金额：{{item.TuseHouse_sumAmount}}</el-tag>
+                                <el-tag type="success">现金分摊：{{item.TuseHouse_XJfentan}}</el-tag>
+                                <el-tag type="success">资金分摊：{{item.TuseHouse_ZJfentan}}</el-tag>
+                            </el-col>
                         <el-row :gutter="20">
                             <el-col :xs="9" :xl="3" :sm="3" class="vote_result_tip">
                                 投票意见为：

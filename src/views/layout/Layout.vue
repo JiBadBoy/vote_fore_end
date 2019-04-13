@@ -4,7 +4,7 @@
             <app-header/>
         </el-header>
         <div class="banner hidden-xs-only">
-            <img src="/static/images/timg.jpg" alt="住房专项维修资金使用业主投票系统" style="width:100%;">
+            <img src="/static/images/timg.jpg" alt="住宅专项维修资金使用业主表决系统" style="width:100%;">
         </div>
        <el-main>
            <app-main/>
