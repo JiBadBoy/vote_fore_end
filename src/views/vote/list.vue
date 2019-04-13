@@ -29,7 +29,12 @@
                                 v-bind:key="index"
                         >
                             <template slot="title" type="flex" justify="space-around">
-                                <el-col >[维修项目]: {{item.Tuse_content}}</el-col>
+                               <el-col>
+                                 <el-row type="flex" :xs="24" class="vote_item_tit">
+                                    <el-col >[维修项目]: {{item.Tuse_content}}</el-col>
+                                    <el-col class="vote_item_time">[结束时间]: 2019.12.30</el-col>
+                                  </el-row>
+                               </el-col>
                             </template>
                             <el-card shadow="always">
                             <el-col>
@@ -179,4 +184,15 @@ export default {
     .el-collapse-item__content span{
         margin-bottom: 8px;
     }
+    .vote_item_time {
+      color: #F56C6C;
+    }
+  @media only screen and (max-width: 767px){
+    .vote_item_tit{
+      flex-wrap: wrap;
+    }
+    .vote_item_tit .el-col{
+      line-height: 20px;
+    }
+  }
 </style>
