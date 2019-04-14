@@ -4,7 +4,6 @@
             <el-card shadow="always">
                 <el-row :gutter="12"  type="flex" justify="space-around">
                     <el-button  :span="12" :offset="6" type="primary" @click="mWindow.JSCallBackId.startReadCard()">开始读卡</el-button>
-                    <!--<el-button  :span="12" :offset="6" type="primary" @click="startReadCard()">开始读卡</el-button>-->
                     <el-button  :span="12" :offset="6" type="primary" @click="onReadSuccess()">确认成功</el-button>
                 </el-row>
             </el-card>
