@@ -3,8 +3,8 @@
         <el-col :xs="24" :xl="16" :sm="16">
             <el-row>
                 <el-alert
-                        title="如果房屋座落与您实际房屋信息不一致，请与物业公司或维修资金监管机构联系！"
-                        type="warning"
+                        title = "如果房屋座落与您实际房屋信息不一致，请与物业公司或维修资金监管机构联系！"
+                        type  = "warning"
                         center
                         show-icon>
                 </el-alert>
@@ -24,15 +24,15 @@
             <el-row>
                     <el-collapse v-model="activeName" accordion>
                         <el-collapse-item
-                                v-for="(item, index) in list"
-                                v-bind:name="index"
-                                v-bind:key="index"
+                                                                                        v-for = "(item, index) in list"
+                                                                                 v-bind:name  = "index"
+                                                                                 v-bind:key   = "index"
                         >
                             <template slot="title" type="flex" justify="space-around">
                                <el-col>
                                  <el-row type="flex" :xs="24" class="vote_item_tit">
-                                    <el-col >[维修项目]: {{item.Tuse_content}}</el-col>
-                                    <el-col class="vote_item_time">[结束时间]: {{item.Tuse_voteEnd}}</el-col>
+                                    <el-col >[维修项目]                      : {{item.Tuse_content}}</el-col>
+                                    <el-col class="vote_item_time">[结束时间]: {{item.djs}}</el-col>
                                   </el-row>
                                </el-col>
                             </template>
@@ -59,10 +59,10 @@
         </el-col>
         <el-dialog v-bind:title="dialogTitle" :visible.sync="dialogFormVisible" custom-class="vote_list_dialog" center>
             <el-alert
-                    :title="address"
+                    :title = "address"
                     center
-                    type="success"
-                    :closable="false">
+                                    type    = "success"
+                                  :closable = "false">
             </el-alert>
             <el-form :model="voteForm" :rules="voteFormRules" ref="voteForm" class="vote_list_dialogcon">
                 <el-form-item label="选项" prop="agree">
@@ -109,8 +109,44 @@ export default {
   },
   created () {
     this.getList()
+    for (var key in this.list) {
+      this.list[key]['djs'] = this.InitTime(this.list[key]['Tuse_voteEnd'])
+    }
+  },
+  mounted () {
+    setInterval(() => {
+      for (var key in this.list) {
+        let date = new Date()
+        let now = date.getTime()
+        let endDate = new Date(this.list[key]['Tuse_voteEnd'])
+        let end = endDate.getTime()
+        let leftTime = end - now
+        if (leftTime > 0) {
+          var dd = Math.floor(leftTime / 1000 / 60 / 60 / 24)
+          var hh = Math.floor((leftTime / 1000 / 60 / 60) % 24)
+          var mm = Math.floor((leftTime / 1000 / 60) % 60)
+          var ss = Math.floor((leftTime / 1000) % 60)
+        }
+        this.list[key]['djs'] = dd + '天' + hh + '小时' + mm + '分' + ss + '秒'
+      }
+    }, 1000)
   },
   methods: {
+    InitTime (endtime) {
+      let endDate = new Date(endtime)
+      let end = endDate.getTime()
+      let time = end - new Date().getTime()
+      if (time <= 0) {
+        return '结束'
+      } else {
+        let dd = Math.floor(time / 60 / 60 / 24)
+        let hh = Math.floor((time / 60 / 60) % 24)
+        let mm = Math.floor((time / 60) % 60)
+        let ss = Math.floor(time % 60)
+        let str = dd + '天' + hh + '小时' + mm + '分' + ss + '秒'
+        return str
+      }
+    },
     getList () {
       const userInfo = getUser()
       this.id = userInfo.uid
@@ -169,13 +205,19 @@ export default {
 </script>
 
 <style scoped>
+    .el-radio{
+      margin-right: 0px;
+    }
+    .el-radio.is-bordered {
+        padding: 12px 18px 0 10px;
+    }
     .vote_list_btn{
-        float: right;
-        margin-top: 5px;
+        float        : right;
+        margin-top   : 5px;
         margin-bottom: 10px;
     }
     .vote_list_dialogcon{
-      display: flex;
+      display        : flex;
       justify-content: center;
     }
     .el-collapse-item__header{
