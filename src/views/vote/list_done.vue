@@ -26,7 +26,7 @@
                             <el-col>
                                 <el-row type="flex" :xs="24" class="vote_item_tit">
                                 <el-col >[维修项目]: {{item.Tuse_content}}</el-col>
-                                <el-col class="vote_item_time">[结束时间]: {{item.Tuse_voteEnd}}</el-col>
+                                <el-col class="vote_item_time">[结束时间]: {{item.djs}}</el-col>
                                 </el-row>
                             </el-col>
                         </template>
@@ -93,11 +93,38 @@ export default {
   created () {
     this.getList()
   },
+  mounted () {
+    setInterval(() => {
+      for (var key in this.list) {
+        this.list[key]['djs'] = this.InitTime(this.list[key]['Tuse_voteEnd'])
+      }
+    }, 1000)
+  },
   methods: {
+    InitTime (endtime) {
+      let endDate = new Date(endtime)
+      let end = endDate.getTime()
+      let time = end - new Date().getTime()
+      if (time <= 0) {
+        return '结束'
+      } else {
+        var dd = Math.floor(time / 1000 / 60 / 60 / 24)
+        var hh = Math.floor((time / 1000 / 60 / 60) % 24)
+        var mm = Math.floor((time / 1000 / 60) % 60)
+        var ss = Math.floor((time / 1000) % 60)
+        let str = dd + '天' + hh + '小时' + mm + '分' + ss + '秒'
+        return str
+      }
+    },
     getList () {
       const userInfo = getUser()
       this.id = userInfo.uid
       fetchDoneList(userInfo.uid, userInfo.loginType).then(response => {
+        response.list.map((item, index) => {
+          this.$set(
+            item, 'djs', this.InitTime(item.Tuse_voteEnd)
+          )
+        })
         this.list = response.list
       })
     }

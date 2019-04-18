@@ -109,25 +109,11 @@ export default {
   },
   created () {
     this.getList()
-    for (var key in this.list) {
-      this.list[key]['djs'] = this.InitTime(this.list[key]['Tuse_voteEnd'])
-    }
   },
   mounted () {
     setInterval(() => {
       for (var key in this.list) {
-        let date = new Date()
-        let now = date.getTime()
-        let endDate = new Date(this.list[key]['Tuse_voteEnd'])
-        let end = endDate.getTime()
-        let leftTime = end - now
-        if (leftTime > 0) {
-          var dd = Math.floor(leftTime / 1000 / 60 / 60 / 24)
-          var hh = Math.floor((leftTime / 1000 / 60 / 60) % 24)
-          var mm = Math.floor((leftTime / 1000 / 60) % 60)
-          var ss = Math.floor((leftTime / 1000) % 60)
-        }
-        this.list[key]['djs'] = dd + '天' + hh + '小时' + mm + '分' + ss + '秒'
+        this.list[key]['djs'] = this.InitTime(this.list[key]['Tuse_voteEnd'])
       }
     }, 1000)
   },
@@ -139,10 +125,10 @@ export default {
       if (time <= 0) {
         return '结束'
       } else {
-        let dd = Math.floor(time / 60 / 60 / 24)
-        let hh = Math.floor((time / 60 / 60) % 24)
-        let mm = Math.floor((time / 60) % 60)
-        let ss = Math.floor(time % 60)
+        var dd = Math.floor(time / 1000 / 60 / 60 / 24)
+        var hh = Math.floor((time / 1000 / 60 / 60) % 24)
+        var mm = Math.floor((time / 1000 / 60) % 60)
+        var ss = Math.floor((time / 1000) % 60)
         let str = dd + '天' + hh + '小时' + mm + '分' + ss + '秒'
         return str
       }
@@ -152,6 +138,11 @@ export default {
       this.id = userInfo.uid
       this.loginType = userInfo.loginType
       fetchList(userInfo.uid, userInfo.loginType).then(response => {
+        response.list.map((item, index) => {
+          this.$set(
+            item, 'djs', this.InitTime(item.Tuse_voteEnd)
+          )
+        })
         this.list = response.list
       })
     },
