@@ -26,7 +26,7 @@
                             <el-col>
                                 <el-row type="flex" :xs="24" class="vote_item_tit">
                                 <el-col >[维修项目]: {{item.Tuse_content}}</el-col>
-                                <el-col class="vote_item_time">[结束时间]: {{item.djs}}</el-col>
+                                <!-- <el-col class="vote_item_time">[结束时间]: {{item.djs}}</el-col> -->
                                 </el-row>
                             </el-col>
                         </template>
@@ -47,14 +47,14 @@
                             <el-col :xs="9" :xl="3" :sm="3" class="vote_result_tip">
                                 投票意见为：
                             </el-col>
-                            <el-col :xs="15" :xl="4" :sm="3">
+                            <el-col :xs="15" :xl="4" :sm="4">
                                 <el-alert
                                         title="同意"
                                         type="success"
                                         center
                                         show-icon
                                         :closable="false"
-                                        v-if="item.TuseVote_value === 1"
+                                        v-if="item.TuseHouseVote_value === 1"
                                 >
                                 </el-alert>
                                 <el-alert
@@ -63,7 +63,7 @@
                                         center
                                         show-icon
                                         :closable="false"
-                                        v-if="item.TuseVote_value === 0"
+                                        v-if="item.TuseHouseVote_value === 2"
                                 >
                                 </el-alert>
                             </el-col>
@@ -94,11 +94,11 @@ export default {
     this.getList()
   },
   mounted () {
-    setInterval(() => {
-      for (var key in this.list) {
-        this.list[key]['djs'] = this.InitTime(this.list[key]['Tuse_voteEnd'])
-      }
-    }, 1000)
+    // setInterval(() => {
+    //   for (var key in this.list) {
+    //     this.list[key]['djs'] = this.InitTime(this.list[key]['Tuse_voteEnd'])
+    //   }
+    // }, 1000)
   },
   methods: {
     InitTime (endtime) {
@@ -120,11 +120,11 @@ export default {
       const userInfo = getUser()
       this.id = userInfo.uid
       fetchDoneList(userInfo.uid, userInfo.loginType).then(response => {
-        response.list.map((item, index) => {
-          this.$set(
-            item, 'djs', this.InitTime(item.Tuse_voteEnd)
-          )
-        })
+        // response.list.map((item, index) => {
+        //   this.$set(
+        //     item, 'djs', this.InitTime(item.Tuse_voteEnd)
+        //   )
+        // })
         this.list = response.list
       })
     }

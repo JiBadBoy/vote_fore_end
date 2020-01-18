@@ -72,7 +72,7 @@ export default {
       disabled: false,
       time: 0,
       btnTxt: '重新发送',
-      validateCode: 123456
+      validateCode: 112233
     }
   },
   methods: {

@@ -32,7 +32,9 @@
                                <el-col>
                                  <el-row type="flex" :xs="24" class="vote_item_tit">
                                     <el-col >[维修项目]                      : {{item.Tuse_content}}</el-col>
-                                    <el-col class="vote_item_time">[结束时间]: {{item.djs}}</el-col>
+                                    <el-col class="vote_item_time"
+                                     v-if="item.djs !== ''"
+                                    >[结束时间]: {{item.djs}}</el-col>
                                   </el-row>
                                </el-col>
                             </template>
@@ -68,7 +70,7 @@
                 <el-form-item label="选项" prop="agree">
                     <el-radio-group v-model="voteForm.agree">
                     <el-radio label="1" border>同意</el-radio>
-                    <el-radio label="0" border>不同意</el-radio>
+                    <el-radio label="2" border>不同意</el-radio>
                     </el-radio-group>
                 </el-form-item>
             </el-form>
@@ -119,6 +121,9 @@ export default {
   },
   methods: {
     InitTime (endtime) {
+      if (endtime < '2001-1-1') {
+        return ''
+      }
       let endDate = new Date(endtime)
       let end = endDate.getTime()
       let time = end - new Date().getTime()
@@ -159,10 +164,10 @@ export default {
           this.dialogFormVisible = false
           const data = {
             TuseHouse_id: this.item.TuseHouse_id,
-            TuseVote_value: this.voteForm.agree,
-            TuseVote_way: this.loginType,
-            TuseVote_wayCode: this.id,
-            TuseVote_man: this.item.Taccount_name
+            TuseHouseVote_value: this.voteForm.agree,
+            TuseHouseVote_way: this.loginType,
+            TuseHouseVote_wayCode: this.id,
+            TuseHouseVote_man: this.item.Taccount_name
           }
           doVote(data).then(response => {
             const data = response
